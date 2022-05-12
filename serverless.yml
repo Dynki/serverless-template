@@ -1,0 +1,40 @@
+service: xcad-kms-auth
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  jest:
+    # You can pass jest options here
+    # See details here: https://facebook.github.io/jest/docs/configuration.html
+    collectCoverage: true
+  serverless-offline:
+    host: 0.0.0.0
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-jest-plugin
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+
+functions:
+  balances:
+    handler: handlers/balances.handler
+    events:
+      - http:
+          method: get
+          path: balances/{address}
+  price:
+    handler: handlers/price.handler
+    events:
+      - http:
+          method: get
+          path: price
+        

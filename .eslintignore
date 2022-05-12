@@ -1,0 +1,8 @@
+node_modules
+.webpack
+.serverless
+.vscode
+.webpack
+*.config.js
+*.json
+*.js
